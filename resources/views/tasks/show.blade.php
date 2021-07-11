@@ -13,13 +13,15 @@
             <th>タスク</th>
             <td>{{ $task->content }}</td>
         </tr>
+        <tr>
+            <th>ステータス</th>
+            <td>{{ $task->status }}</td>
+        </tr>
     </table>
     {!! link_to_route('tasks.edit', 'タスク編集', ['task' => $task->id], ['class' => 'btn btn-light']) !!}
     
-    <div class="navbar-nav mr-auto">
     {!! Form::model($task, ['route' => ['tasks.destroy', $task->id], 'method' => 'delete']) !!}
         {!! Form::submit('削除', ['class' => 'btn btn-danger']) !!}
     {!! Form::close() !!}
-    </div>
     
 @endsection
