@@ -13,7 +13,7 @@
 
         <div class="container">
             
-             @include('commons.error')
+            @include('commons.error')
         
             @yield('content')
         </div>

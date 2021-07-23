@@ -11,6 +11,9 @@
             <ul class="navbar-nav mr-auto"></ul>
             <ul class="navbar-nav">
                 @if (Auth::check())
+                    {{-- ログアウトへのリンク --}}
+                    <li class="nav-item">{!! link_to_route('logout.get', 'Logout') !!}</li>
+                    {{-- タスク作成ページのリンク --}}
                     <li class='nav-item'>{!! link_to_route('tasks.create', '新規タスク追加', [], ['class' => 'nav-link']) !!}</li>
                 @else
                     {{-- ユーザ登録ページへのリンク --}}
