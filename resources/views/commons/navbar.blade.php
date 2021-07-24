@@ -12,7 +12,7 @@
             <ul class="navbar-nav">
                 @if (Auth::check())
                     {{-- ログアウトへのリンク --}}
-                    <li class="nav-item">{!! link_to_route('logout.get', 'Logout') !!}</li>
+                    <li class="nav-item">{!! link_to_route('logout.get', 'Logout', [], ['class' => 'nav-link']) !!}</li>
                     {{-- タスク作成ページのリンク --}}
                     <li class='nav-item'>{!! link_to_route('tasks.create', '新規タスク追加', [], ['class' => 'nav-link']) !!}</li>
                 @else

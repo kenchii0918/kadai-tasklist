@@ -15,24 +15,23 @@ class TasksController extends Controller
      */
     public function index()
     {
-        $data = [];
-        if (\Auth::check()) {
+        $data =[];
+        if (\Auth::id()){
             $user = \Auth::user();
+            
             $tasks = $user->tasks()->orderBy('created_at', 'desc')->paginate(10);
-
+        
             $data = [
                 'user' => $user,
                 'tasks' => $tasks,
-            ];
-
-            return view('tasks.index', [
-                'tasks' => $tasks,
+                ];
                 
+            return view('tasks.index', [
+                    'tasks' => $tasks,
             ]);
-
         } else {
             return view('welcome');
-        }    
+        }            
     }
 
     /**
@@ -77,10 +76,16 @@ class TasksController extends Controller
      */
     public function show($id)
     {
-        $task = Task::findOrFail($id);
         
-        return view('tasks.show', [
-            'task' => $task,]);
+            $task = Task::findOrFail($id);
+        
+        if (\Auth::id() === $task->user_id) {
+        
+            return view('tasks.show', [
+                'task' => $task,]);
+        } else {
+            return view('welcome');
+        }
     }
 
     /**
@@ -110,9 +115,12 @@ class TasksController extends Controller
             'status' => 'required|max:10', ]);
         
         $task = Task::findOrFail($id);
-        $task->content = $request->content;
-        $task->status = $request->status;
-        $task->save();
+        
+        if (\Auth::id() === $task->user_id) {
+            $task->content = $request->content;
+            $task->status = $request->status;
+            $task->save();
+        }
         
         return redirect('/');
     }
@@ -126,8 +134,10 @@ class TasksController extends Controller
     public function destroy($id)
     {
         $task = Task::findOrFail($id);
-        $task->delete();
-        
+
+        if (\Auth::id() === $task->user_id) {
+            $task->delete();
+        }
         return redirect('/');
     }
 }
